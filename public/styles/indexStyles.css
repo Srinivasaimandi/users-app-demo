@@ -23,15 +23,16 @@ body {
       position: relative;
     }
     .main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;      /* Center horizontally */
-  justify-content: center;  /* Center vertically */
-  text-align: center;       /* Center text inside */
-  height: 100%;             /* Take full height of container */
-  min-height: 300px;        /* Optional: ensures enough height for vertical centering */
-}
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;      /* Center horizontally */
+      justify-content: center;  /* Center vertically */
+      text-align: center;       /* Center text inside */
+      height: 100%;             /* Take full height of container */
+      min-height: 300px;        /* Optional: ensures enough height for vertical centering */
+      position: relative;
+    }
   .main-content h1 {
     width: 100%;
     text-align: center;
@@ -125,13 +126,12 @@ body {
     }
 
     #back-arrow {
-      font-weight: lighter; 
-      font-size: 13px; 
-      text-decoration: none; 
-      color: #3498db; 
+      font-weight: lighter;
+      font-size: 13px;
+      text-decoration: none;
+      color: #3498db;
       transform: scale(1.5);
-
-      position: fixed; 
-      top: 190px; 
-      left:350px; 
+      position: absolute;
+      top: 12px;
+      left: 12px;
     }

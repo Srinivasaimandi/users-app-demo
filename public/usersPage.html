@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Users List</title>
-  <link rel="stylesheet" href="./styles/usersStyles.css" <!-- Add this in <head>
+  <link rel="stylesheet" href="./styles/usersStyles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
@@ -15,10 +15,14 @@
   </a>
   <div class="container">
     <div class="header-row">
-      <h1>Users List <button id="refresh-btn" title="Refresh users"
-          style="background: none; border: none; cursor: pointer;">
+      <h1>Users List
+        <button id="refresh-btn" class="icon-btn" data-tooltip="Refresh">
           <i class="fas fa-sync-alt fa-2x" style="color: #2c3e50;"></i>
-        </button></h1>
+        </button>
+        <button id="reset-btn" class="icon-btn" data-tooltip="Reload users">
+          <i class="fas fa-rotate-left fa-2x" style="color: #2c3e50;"></i>
+        </button>
+      </h1>
       <div class="search-container">
         <input type="text" id="search-input" placeholder="Search by name or email..." />
       </div>
@@ -32,6 +36,7 @@
           <th>Name</th>
           <th>Email</th>
           <th>Username</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody></tbody>

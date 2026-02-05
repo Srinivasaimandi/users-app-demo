@@ -89,7 +89,90 @@ tr:hover {
   margin-bottom: 10px;
 }
 
-#refresh-btn:hover {
-  transform: rotate(20deg);
+/* Rotation handled on the icon only to keep tooltip stable */
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 4px;
+  position: relative;
+}
+
+.icon-btn i {
   transition: transform 0.2s ease-in-out;
+}
+
+.icon-btn:hover i {
+  transform: rotate(20deg);
+}
+
+.icon-btn[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2c3e50;
+  color: #fff;
+  font-size: 0.75em;
+  padding: 4px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 0.80em;
+  padding: 4px 6px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: #2c3e50;
+  cursor: pointer;
+  font-size: 0.80em;
+  padding: 4px 6px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.edit-btn:hover {
+  color: #1f2d3a;
+  transform: scale(1.1);
+}
+
+.delete-btn:hover {
+  color: #c0392b;
+  transform: scale(1.1);
+}
+
+.save-btn {
+  background: #27ae60;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.85em;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.save-btn:hover {
+  background: #1f8a4c;
+  transform: scale(1.05);
+}
+
+.inline-input {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 0.95em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
