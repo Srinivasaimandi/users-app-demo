@@ -22,7 +22,10 @@
       <div class="card-body p-4 p-lg-5">
         <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 mb-3">
           <div class="d-flex align-items-center gap-2">
-            <h1 class="h3 fw-bold m-0">Users List</h1>
+            <h1 class="h3 fw-bold m-0 users-title">Users List</h1>
+            <button id="add-btn" class="icon-btn" data-tooltip="Add user" aria-label="Add user">
+              <i class="fas fa-plus fa-lg"></i>
+            </button>
             <button id="refresh-btn" class="icon-btn" data-tooltip="Refresh" aria-label="Refresh users">
               <i class="fas fa-sync-alt fa-lg"></i>
             </button>
@@ -36,6 +39,41 @@
           <a href="#" id="logout-link" class="btn btn-outline-primary">Logout</a>
         </div>
         <div class="alert alert-danger py-2" id="error-msg" style="display:none;"></div>
+        <div class="modal-overlay" id="add-user-modal" aria-hidden="true">
+          <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="add-user-title">
+            <div class="modal-header">
+              <h2 id="add-user-title" class="h5 m-0">Add User</h2>
+              <button type="button" class="modal-close" id="add-user-close" aria-label="Close">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-danger py-2" id="add-user-error" style="display:none;"></div>
+              <form id="add-user-form" novalidate>
+                <div class="mb-3">
+                  <label for="add-name" class="form-label">Name</label>
+                  <input id="add-name" name="name" type="text" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                  <label for="add-email" class="form-label">Email</label>
+                  <input id="add-email" name="email" type="email" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                  <label for="add-username" class="form-label">Username</label>
+                  <input id="add-username" name="username" type="text" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                  <label for="add-password" class="form-label">Password</label>
+                  <input id="add-password" name="password" type="password" class="form-control" required />
+                </div>
+                <div class="modal-actions">
+                  <button type="submit" class="btn btn-primary" id="add-user-save">Save</button>
+                  <button type="button" class="btn btn-outline-secondary" id="add-user-cancel">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
         <div class="table-responsive">
           <table id="users-table" class="table align-middle table-hover" style="display:none;">
       <thead>

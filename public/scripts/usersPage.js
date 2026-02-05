@@ -90,6 +90,119 @@
         filterUsers(e.target.value);
       });
 
+      const addBtn = document.getElementById('add-btn');
+      const addModal = document.getElementById('add-user-modal');
+      const addForm = document.getElementById('add-user-form');
+      const addClose = document.getElementById('add-user-close');
+      const addCancel = document.getElementById('add-user-cancel');
+      const addError = document.getElementById('add-user-error');
+      const addSave = document.getElementById('add-user-save');
+      const addName = document.getElementById('add-name');
+      const addEmail = document.getElementById('add-email');
+      const addUsername = document.getElementById('add-username');
+      const addPassword = document.getElementById('add-password');
+
+      const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+      const openAddModal = () => {
+        addError.style.display = "none";
+        addForm.reset();
+        addModal.classList.add('is-open');
+        addModal.setAttribute('aria-hidden', 'false');
+        addName.focus();
+      };
+
+      const closeAddModal = () => {
+        addModal.classList.remove('is-open');
+        addModal.setAttribute('aria-hidden', 'true');
+      };
+
+      addBtn.addEventListener('click', openAddModal);
+      addClose.addEventListener('click', closeAddModal);
+      addCancel.addEventListener('click', closeAddModal);
+      addModal.addEventListener('click', (e) => {
+        if (e.target === addModal) closeAddModal();
+      });
+
+      addEmail.addEventListener('input', () => {
+        const value = addEmail.value.trim();
+        if (value.length === 0 || isValidEmail(value)) {
+          addEmail.classList.remove('is-invalid');
+          addEmail.setCustomValidity("");
+        } else {
+          addEmail.classList.add('is-invalid');
+          addEmail.setCustomValidity("Invalid email address.");
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && addModal.classList.contains('is-open')) {
+          closeAddModal();
+        }
+      });
+
+      addForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        addError.style.display = "none";
+
+        const payload = {
+          name: addName.value.trim(),
+          email: addEmail.value.trim(),
+          username: addUsername.value.trim(),
+          password: addPassword.value.trim()
+        };
+
+        if (!payload.name || !payload.email || !payload.username || !payload.password) {
+          addError.textContent = "Please fill out all fields.";
+          addError.style.display = "block";
+          return;
+        }
+
+        if (!isValidEmail(payload.email)) {
+          addEmail.classList.add('is-invalid');
+          addEmail.setCustomValidity("Invalid email address.");
+          addError.textContent = "Please enter a valid email address.";
+          addError.style.display = "block";
+          addEmail.focus();
+          return;
+        }
+
+        const token = localStorage.getItem('x-api-token');
+        addSave.disabled = true;
+        try {
+          const response = await fetch('/api/users', {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json",
+              'x-api-key': token
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (response.ok) {
+            closeAddModal();
+            await fetchUsers();
+            return;
+          }
+
+          let message = "Failed to add user.";
+          try {
+            const data = await response.json();
+            if (data && data.message) message = data.message;
+          } catch (_) {
+            // Ignore JSON parse errors
+          }
+
+          addError.textContent = message;
+          addError.style.display = "block";
+        } catch (err) {
+          addError.textContent = "Failed to add user.";
+          addError.style.display = "block";
+        } finally {
+          addSave.disabled = false;
+        }
+      });
+
       const tbody = document.querySelector('#users-table tbody');
       tbody.addEventListener('click', async (e) => {
         const editBtn = e.target.closest('.edit-btn');
