@@ -62,6 +62,13 @@
       "email": "elsieealker@hotmail.com",
       "username": "elsieealker",
       "password": "$test123#"
+    },
+    {
+      "id": 9,
+      "name": "Sangeetha Shah",
+      "email": "sangeethashah@example.com",
+      "username": "sangeethashah",
+      "password": "$test123#"
     }
   ]
 }

@@ -51,7 +51,7 @@
     function renderUsers(users) {
       const tbody = document.querySelector('#users-table tbody');
       tbody.innerHTML = "";
-      users.slice(1).forEach(user => {
+      users.filter(user => String(user.id) !== "0").forEach(user => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${user.id}</td>
@@ -76,10 +76,24 @@
 
     // Filter function
     function filterUsers(query) {
-      const filtered = allUsers.filter(user =>
-        user.name.toLowerCase().includes(query.toLowerCase()) ||
-        user.email.toLowerCase().includes(query.toLowerCase())
-      );
+      const q = query.toLowerCase().trim();
+      if (!q) {
+        renderUsers(allUsers);
+        return;
+      }
+      const qCompact = q.replace(/\s+/g, "");
+      const filtered = allUsers.filter(user => {
+        const id = String(user.id || "").toLowerCase();
+        const name = String(user.name || "").toLowerCase();
+        const email = String(user.email || "").toLowerCase();
+        const username = String(user.username || "").toLowerCase();
+        const haystack = `${id} ${name} ${email} ${username}`;
+        const haystackCompact = haystack.replace(/\s+/g, "");
+        return (
+          haystack.includes(q) ||
+          (qCompact && haystackCompact.includes(qCompact))
+        );
+      });
       renderUsers(filtered);
     }
 
