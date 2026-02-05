@@ -20,23 +20,29 @@
   <div class="container py-5">
     <div class="card shadow-lg border-0">
       <div class="card-body p-4 p-lg-5">
-        <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 mb-3">
-          <div class="d-flex align-items-center gap-2">
+        <div class="users-toolbar mb-3">
+          <div class="users-toolbar-top">
             <h1 class="h3 fw-bold m-0 users-title">Users List</h1>
-            <button id="add-btn" class="icon-btn" data-tooltip="Add user" aria-label="Add user">
-              <i class="fas fa-plus fa-lg"></i>
-            </button>
-            <button id="refresh-btn" class="icon-btn" data-tooltip="Refresh" aria-label="Refresh users">
-              <i class="fas fa-sync-alt fa-lg"></i>
-            </button>
-            <button id="reset-btn" class="icon-btn" data-tooltip="Reload users" aria-label="Reset data">
-              <i class="fas fa-rotate-left fa-lg"></i>
-            </button>
+            <div class="users-toolbar-center">
+              <div class="users-toolbar-search">
+                <input type="text" id="search-input" class="form-control users-search" placeholder="Search by name or email..." />
+              </div>
+            </div>
+            <div class="users-toolbar-right">
+              <div class="users-toolbar-actions">
+                <button id="add-btn" class="toolbar-btn" data-tooltip="Add user" aria-label="Add user">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button id="refresh-btn" class="toolbar-btn" data-tooltip="Refresh" aria-label="Refresh users">
+                  <i class="fas fa-sync-alt"></i>
+                </button>
+                <button id="reset-btn" class="toolbar-btn" data-tooltip="Reset data" aria-label="Reset data">
+                  <i class="fas fa-rotate-left"></i>
+                </button>
+              </div>
+              <a href="#" id="logout-link" class="btn btn-outline-primary btn-sm">Logout</a>
+            </div>
           </div>
-          <div class="ms-lg-auto w-100 w-lg-auto">
-            <input type="text" id="search-input" class="form-control" placeholder="Search by name or email..." />
-          </div>
-          <a href="#" id="logout-link" class="btn btn-outline-primary">Logout</a>
         </div>
         <div class="alert alert-danger py-2" id="error-msg" style="display:none;"></div>
         <div class="modal-overlay" id="add-user-modal" aria-hidden="true">
