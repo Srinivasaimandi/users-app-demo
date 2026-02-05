@@ -1,5 +1,10 @@
 // Fetch and render users after login
     let allUsers = [];
+    const themeKey = "users-app-theme";
+    const storedTheme = localStorage.getItem(themeKey);
+    if (storedTheme) {
+      document.body.setAttribute("data-theme", storedTheme);
+    }
     async function fetchUsers() {
       const token = localStorage.getItem('x-api-token');
       const errorMsg = document.getElementById('error-msg');

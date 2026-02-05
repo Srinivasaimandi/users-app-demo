@@ -1,0 +1,7 @@
+body[data-theme="pastel"] {
+  --bg-start: #f7f3ff;
+  --bg-end: #f0fffb;
+  --accent: #ec4899;
+  --accent-strong: #22c55e;
+  --card-border: rgba(236, 72, 153, 0.25);
+}

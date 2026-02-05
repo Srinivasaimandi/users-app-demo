@@ -1,0 +1,24 @@
+body[data-theme="dark"] {
+  --bg-start: #0a0f1f;
+  --bg-end: #111827;
+  --accent: #a855f7;
+  --accent-strong: #22d3ee;
+  --card-border: rgba(168, 85, 247, 0.3);
+}
+
+body[data-theme="dark"] .card,
+body[data-theme="dark"] .bg-light {
+  background-color: rgba(15, 23, 42, 0.85) !important;
+  color: #e2e8f0;
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.6);
+}
+
+body[data-theme="dark"] .text-muted {
+  color: #b9c6e6 !important;
+}
+
+body[data-theme="dark"] .btn-dark {
+  background-color: #38bdf8;
+  border-color: #38bdf8;
+  color: #0f172a;
+}

@@ -1,14 +1,24 @@
 :root {
-  --app-bg: #eef2f6;
-  --card-border: rgba(13, 110, 253, 0.12);
+  --bg-start: #eef4ff;
+  --bg-end: #f7fbff;
+  --card-border: rgba(37, 99, 235, 0.2);
+  --surface: rgba(255, 255, 255, 0.92);
+  --shadow: 0 20px 50px rgba(15, 23, 42, 0.1), 0 8px 16px rgba(15, 23, 42, 0.06);
 }
 
 body {
-  background: linear-gradient(135deg, #eef2f6 0%, #f8fbff 100%);
+  background:
+    radial-gradient(900px 500px at -10% -10%, rgba(37, 99, 235, 0.18), transparent 60%),
+    radial-gradient(700px 420px at 110% 8%, rgba(14, 165, 233, 0.16), transparent 55%),
+    linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
 }
 
 .card {
   border: 1px solid var(--card-border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  background-color: var(--surface);
+  backdrop-filter: saturate(140%) blur(6px);
 }
 
 .icon-btn {
@@ -72,18 +82,19 @@ body {
 }
 
 .save-btn {
-  background: #27ae60;
+  background: linear-gradient(135deg, var(--accent, #2563eb), var(--accent-strong, #1d4ed8));
   border: none;
   color: #fff;
   cursor: pointer;
   font-size: 0.85em;
   padding: 6px 12px;
   border-radius: 999px;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
 }
 
 .save-btn:hover {
-  background: #1f8a4c;
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
   transform: translateY(-1px);
 }
 
@@ -93,4 +104,12 @@ body {
   font-size: 0.95em;
   border: 1px solid #cdd4df;
   border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inline-input:focus {
+  outline: none;
+  border-color: var(--accent, #2563eb);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }

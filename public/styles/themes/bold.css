@@ -1,0 +1,24 @@
+body[data-theme="bold"] {
+  --bg-start: #0f172a;
+  --bg-end: #0b1020;
+  --accent: #facc15;
+  --accent-strong: #fb7185;
+  --card-border: rgba(250, 204, 21, 0.4);
+}
+
+body[data-theme="bold"] .card,
+body[data-theme="bold"] .bg-light {
+  background-color: rgba(15, 23, 42, 0.9) !important;
+  color: #f8fafc;
+  box-shadow: 0 22px 55px rgba(2, 6, 23, 0.7);
+}
+
+body[data-theme="bold"] .text-muted {
+  color: #cbd5f5 !important;
+}
+
+body[data-theme="bold"] .btn-dark {
+  background-color: #facc15;
+  border-color: #facc15;
+  color: #0b1020;
+}
