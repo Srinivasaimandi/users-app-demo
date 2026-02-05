@@ -1,0 +1,7 @@
+body[data-theme="warm"] {
+  --bg-start: #fff1e6;
+  --bg-end: #fff8f0;
+  --accent: #f97316;
+  --accent-strong: #ef4444;
+  --card-border: rgba(249, 115, 22, 0.28);
+}

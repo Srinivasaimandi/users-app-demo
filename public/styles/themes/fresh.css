@@ -1,0 +1,7 @@
+body[data-theme="fresh"] {
+  --bg-start: #e8fff6;
+  --bg-end: #f2fff9;
+  --accent: #10b981;
+  --accent-strong: #22d3ee;
+  --card-border: rgba(16, 185, 129, 0.26);
+}

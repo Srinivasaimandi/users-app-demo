@@ -4,7 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <title>Users List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./styles/usersStyles.css" />
+    <link rel="stylesheet" href="./styles/themes/cool.css" />
+    <link rel="stylesheet" href="./styles/themes/warm.css" />
+    <link rel="stylesheet" href="./styles/themes/fresh.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
@@ -13,23 +17,27 @@
     <img style="position: absolute; top: 0; right: 0; border: 0;" src="./images/forkme_right_green_007200.png"
       alt="Fork me on GitHub">
   </a>
-  <div class="container">
-    <div class="header-row">
-      <h1>Users List
-        <button id="refresh-btn" class="icon-btn" data-tooltip="Refresh">
-          <i class="fas fa-sync-alt fa-2x" style="color: #2c3e50;"></i>
-        </button>
-        <button id="reset-btn" class="icon-btn" data-tooltip="Reload users">
-          <i class="fas fa-rotate-left fa-2x" style="color: #2c3e50;"></i>
-        </button>
-      </h1>
-      <div class="search-container">
-        <input type="text" id="search-input" placeholder="Search by name or email..." />
-      </div>
-      <a href="#" id="logout-link" class="logout-link">Logout</a>
-    </div>
-    <div class="error" id="error-msg" style="display:none;"></div>
-    <table id="users-table" style="display:none;">
+  <div class="container py-5">
+    <div class="card shadow-lg border-0">
+      <div class="card-body p-4 p-lg-5">
+        <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 mb-3">
+          <div class="d-flex align-items-center gap-2">
+            <h1 class="h3 fw-bold m-0">Users List</h1>
+            <button id="refresh-btn" class="icon-btn" data-tooltip="Refresh" aria-label="Refresh users">
+              <i class="fas fa-sync-alt fa-lg"></i>
+            </button>
+            <button id="reset-btn" class="icon-btn" data-tooltip="Reload users" aria-label="Reset data">
+              <i class="fas fa-rotate-left fa-lg"></i>
+            </button>
+          </div>
+          <div class="ms-lg-auto w-100 w-lg-auto">
+            <input type="text" id="search-input" class="form-control" placeholder="Search by name or email..." />
+          </div>
+          <a href="#" id="logout-link" class="btn btn-outline-primary">Logout</a>
+        </div>
+        <div class="alert alert-danger py-2" id="error-msg" style="display:none;"></div>
+        <div class="table-responsive">
+          <table id="users-table" class="table align-middle table-hover" style="display:none;">
       <thead>
         <tr>
           <th>ID</th>
@@ -40,7 +48,10 @@
         </tr>
       </thead>
       <tbody></tbody>
-    </table>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
   <script src="./scripts/usersPage.js">  </script>
 </body>

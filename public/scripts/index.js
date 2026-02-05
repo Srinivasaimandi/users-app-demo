@@ -30,6 +30,21 @@ document.getElementById("back-arrow").addEventListener("click", function (e) {
   document.getElementById("login-credentials").style.display = "none";
 });
 
+// Theme cycle on clicking "Users"
+const themeCycle = ["cool", "warm", "fresh"];
+const themeKey = "users-app-theme";
+const themeToggle = document.getElementById("theme-toggle");
+const storedTheme = localStorage.getItem(themeKey);
+let themeIndex = storedTheme ? Math.max(themeCycle.indexOf(storedTheme), 0) : 0;
+document.body.setAttribute("data-theme", themeCycle[themeIndex]);
+
+themeToggle.addEventListener("click", () => {
+  themeIndex = (themeIndex + 1) % themeCycle.length;
+  const nextTheme = themeCycle[themeIndex];
+  document.body.setAttribute("data-theme", nextTheme);
+  localStorage.setItem(themeKey, nextTheme);
+});
+
 // Login form handler
 document
   .getElementById("login-form")
