@@ -46,7 +46,7 @@
     function renderUsers(users) {
       const tbody = document.querySelector('#users-table tbody');
       tbody.innerHTML = "";
-      users.forEach(user => {
+      users.slice(1).forEach(user => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${user.id}</td>

@@ -1,95 +1,15 @@
+:root {
+  --app-bg: #eef2f6;
+  --card-border: rgba(13, 110, 253, 0.12);
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
-  margin: 0;
+  background: linear-gradient(135deg, #eef2f6 0%, #f8fbff 100%);
 }
 
-.container {
-  max-width: 800px;
-  margin: 40px auto;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 40px;
+.card {
+  border: 1px solid var(--card-border);
 }
-
-/* .header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-} */
-
-.header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.search-container {
-  flex-grow: 1;
-  text-align: center;
-}
-
-.search-container input {
-  padding: 8px 12px;
-  font-size: 16px;
-  width: 100%;
-  max-width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.header-row h1 {
-  margin: 0;
-  font-size: 2em;
-  color: #2c3e50;
-}
-
-.logout-link {
-  color: #3498db;
-  text-decoration: none;
-  font-size: 1em;
-  transition: color 0.3s, transform 0.3s;
-}
-
-.logout-link:hover {
-  color: #2c80b4;
-  transform: scale(1.05);
-  text-decoration: none;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th,
-td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
-}
-
-th {
-  background: #3498db;
-  color: #fff;
-}
-
-tr:hover {
-  background: #f1f7ff;
-}
-
-.error {
-  color: #e74c3c;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-/* Rotation handled on the icon only to keep tooltip stable */
 
 .icon-btn {
   background: none;
@@ -113,7 +33,7 @@ tr:hover {
   bottom: 120%;
   left: 50%;
   transform: translateX(-50%);
-  background: #2c3e50;
+  background: #1f2a3b;
   color: #fff;
   font-size: 0.75em;
   padding: 4px 6px;
@@ -123,29 +43,27 @@ tr:hover {
   pointer-events: none;
 }
 
-.delete-btn {
+.delete-btn,
+.edit-btn {
   background: none;
   border: none;
-  color: #e74c3c;
   cursor: pointer;
-  font-size: 0.80em;
+  font-size: 0.85em;
   padding: 4px 6px;
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .edit-btn {
-  background: none;
-  border: none;
   color: #2c3e50;
-  cursor: pointer;
-  font-size: 0.80em;
-  padding: 4px 6px;
-  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .edit-btn:hover {
   color: #1f2d3a;
   transform: scale(1.1);
+}
+
+.delete-btn {
+  color: #e74c3c;
 }
 
 .delete-btn:hover {
@@ -159,20 +77,20 @@ tr:hover {
   color: #fff;
   cursor: pointer;
   font-size: 0.85em;
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .save-btn:hover {
   background: #1f8a4c;
-  transform: scale(1.05);
+  transform: translateY(-1px);
 }
 
 .inline-input {
   width: 100%;
   padding: 6px 8px;
   font-size: 0.95em;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid #cdd4df;
+  border-radius: 8px;
 }
