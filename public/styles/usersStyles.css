@@ -131,6 +131,10 @@ body {
   justify-content: flex-end;
 }
 
+#edit-user-download {
+  margin-right: auto;
+}
+
 .icon-btn {
   background: none;
   border: none;
@@ -174,11 +178,13 @@ body {
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.edit-btn {
+.edit-btn,
+.download-btn {
   color: #2c3e50;
 }
 
-.edit-btn:hover {
+.edit-btn:hover,
+.download-btn:hover {
   color: #1f2d3a;
   transform: scale(1.1);
 }
