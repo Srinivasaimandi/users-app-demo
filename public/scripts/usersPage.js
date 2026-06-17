@@ -53,7 +53,10 @@ async function fetchUsers() {
     }
     const users = await response.json();
     if (Array.isArray(users) && users.length > 0) {
-      allUsers = users;
+      allUsers = users.map((user) => ({
+        ...user,
+        status: user.status || "active",
+      }));
       currentPage = 1;
       applySort();
       renderUsers();
@@ -101,16 +104,16 @@ function renderUsers() {
 
   paginatedUsers.forEach((user) => {
     const tr = document.createElement("tr");
-    const statusClass =
-      user.status === "inactive" ? "text-secondary" : "text-success";
+    const status = user.status || "active";
+    const badgeClass = status === "active" ? "bg-success" : "bg-secondary";
     tr.innerHTML = `
       <td>${user.id}</td>
       <td>${user.name}</td>
       <td>${user.email}</td>
       <td>${user.username}</td>
       <td>
-        <span class="badge ${user.status === "active" ? "bg-success" : "bg-secondary"}">
-          ${user.status || "active"}
+        <span class="badge ${badgeClass}">
+          ${status}
         </span>
       </td>
       <td>

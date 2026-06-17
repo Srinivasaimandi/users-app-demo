@@ -32,12 +32,12 @@ exports.searchUsers = (req, res) => {
 
     if (name) {
       results = results.filter((user) =>
-        user.name.toLowerCase().includes(name.toLowerCase())
+        user.name.toLowerCase().includes(name.toLowerCase()),
       );
     }
     if (email) {
       results = results.filter((user) =>
-        user.email.toLowerCase().includes(email.toLowerCase())
+        user.email.toLowerCase().includes(email.toLowerCase()),
       );
     }
 
@@ -88,7 +88,7 @@ exports.createUser = (req, res) => {
   const newUserData = req.body;
   const maxId = data.users.reduce(
     (max, user) => (user.id > max ? user.id : max),
-    0
+    0,
   );
   const newUser = new User({
     id: maxId + 1,
@@ -96,6 +96,7 @@ exports.createUser = (req, res) => {
     email: newUserData.email,
     username: newUserData.username,
     password: newUserData.password,
+    status: newUserData.status || "active",
   });
   if (
     !newUser.name ||
@@ -114,7 +115,7 @@ exports.createUser = (req, res) => {
       .json({ message: `Email ${newUser.email} already exists` });
   } else if (
     data.users.some(
-      (existingUser) => existingUser.username === newUser.username
+      (existingUser) => existingUser.username === newUser.username,
     )
   ) {
     return res
@@ -132,7 +133,7 @@ exports.bulkAddUsers = (req, res) => {
   const newUsersData = req.body;
   const maxId = data.users.reduce(
     (max, user) => (user.id > max ? user.id : max),
-    0
+    0,
   );
   const newUsers = newUsersData.map(
     (userData, index) =>
@@ -142,7 +143,8 @@ exports.bulkAddUsers = (req, res) => {
         email: userData.email,
         username: userData.username,
         password: userData.password,
-      })
+        status: userData.status || "active",
+      }),
   );
   for (const user of newUsers) {
     if (!user.name || !user.email || !user.username || !user.password) {
@@ -175,7 +177,7 @@ exports.updateUser = (req, res) => {
   const userIndex = data.users.findIndex((user) => user.id === userId);
 
   if (userIndex !== -1) {
-    const allowedFields = ["name", "email", "username", "password"];
+    const allowedFields = ["name", "email", "username", "password", "status"];
     const updates = {};
     for (const key of allowedFields) {
       if (req.body[key] !== undefined) {

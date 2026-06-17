@@ -5,63 +5,72 @@
       "name": "admin",
       "email": "admin@example.com",
       "username": "admin",
-      "password": "admin"
+      "password": "admin",
+      "status": "active"
     },
     {
       "id": 1,
       "name": "John Doe",
       "email": "johndoe@example.com",
       "username": "johndoe",
-      "password": "$test123#"
+      "password": "$test123#",
+      "status": "active"
     },
     {
       "id": 2,
       "name": "Jane Smith",
       "email": "janesmith@example.com",
       "username": "janesmith",
-      "password": "$test123#"
+      "password": "$test123#",
+      "status": "active"
     },
     {
       "id": 3,
       "name": "Srinivasa Rao Imandi",
       "email": "srinivasaimandi@example.com",
       "username": "srinivasaimandi",
-      "password": "$test123#"
+      "password": "$test123#",
+      "status": "active"
     },
     {
       "id": 4,
       "name": "Emmie Friesen",
       "email": "emmiefriesen@yahoo.com",
       "username": "emmiefriesen",
-      "password": "$test123#"
+      "password": "$test123#",
+      "status": "active"
     },
     {
       "id": 5,
       "name": "Clare Destiny",
       "email": "claredestiny@yahoo.com",
       "username": "claredestiny",
-      "password": "$test123#"
+      "password": "$test123#",
+      "status": "active"
     },
     {
       "id": 6,
       "name": "Stevie Lloyd",
       "email": "stevielloyd@yahoo.com",
       "username": "stevielloyd",
-      "password": "$test123#"
+      "password": "$test123#",
+      "status": "active"
     },
     {
       "id": 7,
       "name": "Vladimir Rossie",
       "email": "vladimirrossie@yahoo.com",
       "username": "vladimirrossie",
-      "password": "$test123#"
+      "password": "$test123#",
+      "status": "active"
     },
     {
       "id": 8,
       "name": "Elsie Walker",
       "email": "elsieealker@hotmail.com",
       "username": "elsieealker",
-      "password": "$test123#"
+      "password": "$test123#",
+      "status": "active"
     }
   ]
 }

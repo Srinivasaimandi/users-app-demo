@@ -129,10 +129,16 @@ body {
   display: flex;
   gap: 10px;
   justify-content: flex-end;
+  padding: 16px 20px 16px 20px;
+  border-top: 1px solid rgba(148, 163, 184, 0.15);
 }
 
 #edit-user-download {
   margin-right: auto;
+}
+
+#confirm-delete-modal .modal-actions {
+  justify-content: flex-end;
 }
 
 .icon-btn {
