@@ -50,8 +50,8 @@ document
   .getElementById("login-form")
   .addEventListener("submit", async function (e) {
     e.preventDefault();
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
+    const username = document.getElementById("username-id").value.trim();
+    const password = document.getElementById("password-id").value.trim();
     const errorMsg = document.getElementById("login-error");
     const successMsg = document.getElementById("login-success");
     errorMsg.style.display = "none";
