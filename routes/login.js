@@ -4,7 +4,7 @@
 
 const express = require("express");
 const crypto = require("crypto");
-const data = require("../data/data.json");
+const { getData } = require("../utils/dataUtils");
 const { addApiKey } = require("../middleware/auth");
 
 const router = express.Router();
@@ -51,7 +51,7 @@ const router = express.Router();
  */
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
-  const user = data.users.find(
+  const user = getData().users.find(
     (u) => u.username === username && u.password === password
   );
   if (user) {

@@ -1,2 +1,5 @@
 node_modules
 npm-debug.log
+
+# The image starts from data/data-backup.json, not your local working copy
+data/data.json
