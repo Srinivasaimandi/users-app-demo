@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Users App — Developer Guide</title>
+<style>
+  :root {
+    --bg: #fbfbfa;
+    --surface: #ffffff;
+    --text: #1d1f23;
+    --muted: #5d636e;
+    --border: #e3e4e8;
+    --accent: #2457c5;
+    --accent-soft: #eaf0fc;
+    --code-bg: #f3f4f6;
+    --warn: #9a5b00;
+    --warn-soft: #fff6e5;
+    --ok: #1d7a46;
+    --bad: #b3261e;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15171b;
+      --surface: #1c1f24;
+      --text: #e6e7ea;
+      --muted: #9ba1ac;
+      --border: #2d3139;
+      --accent: #7ea6ff;
+      --accent-soft: #1f2a42;
+      --code-bg: #23272e;
+      --warn: #f0b45a;
+      --warn-soft: #2e2515;
+      --ok: #5fcf8f;
+      --bad: #ff8a80;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.6 var(--sans);
+  }
+  .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); max-width: 1180px; margin: 0 auto; }
+  nav.toc {
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    padding: 2rem 1.25rem; border-right: 1px solid var(--border); font-size: 0.9rem;
+  }
+  nav.toc .brand { font-weight: 700; margin-bottom: 1.25rem; }
+  nav.toc .brand span { display: block; font-weight: 400; color: var(--muted); font-size: 0.8rem; }
+  nav.toc ol { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+  nav.toc li { counter-increment: s; }
+  nav.toc a {
+    display: block; padding: 0.3rem 0.5rem; border-radius: 6px;
+    color: var(--muted); text-decoration: none;
+  }
+  nav.toc a::before { content: counter(s) ". "; opacity: 0.6; }
+  nav.toc a:hover { background: var(--accent-soft); color: var(--text); }
+  main { padding: 2.5rem 3rem 5rem; max-width: 860px; }
+  header.hero h1 { font-size: 2rem; margin: 0 0 0.25rem; letter-spacing: -0.01em; }
+  header.hero p { color: var(--muted); margin: 0 0 1.5rem; font-size: 1.05rem; }
+  .facts { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .facts span {
+    font-size: 0.8rem; padding: 0.2rem 0.6rem; border: 1px solid var(--border);
+    border-radius: 999px; background: var(--surface); color: var(--muted);
+  }
+  section { padding-top: 1.5rem; border-top: 1px solid var(--border); margin-top: 2.5rem; }
+  h2 { font-size: 1.45rem; margin: 0 0 0.75rem; }
+  h3 { font-size: 1.1rem; margin: 1.75rem 0 0.5rem; }
+  p, li { max-width: 72ch; }
+  a { color: var(--accent); }
+  code {
+    font-family: var(--mono); font-size: 0.86em; background: var(--code-bg);
+    padding: 0.1em 0.35em; border-radius: 4px;
+  }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 0.9rem 1rem; overflow-x: auto; font-size: 0.85rem; line-height: 1.5;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  table { border-collapse: collapse; width: 100%; margin: 0.75rem 0 1rem; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 0.5rem 0.65rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-weight: 600; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  td code { white-space: nowrap; }
+  .verb {
+    display: inline-block; min-width: 3.6rem; text-align: center; font-family: var(--mono);
+    font-size: 0.75rem; font-weight: 700; padding: 0.1rem 0.35rem; border-radius: 4px;
+    background: var(--accent-soft); color: var(--accent);
+  }
+  .note, .warn {
+    border-left: 3px solid var(--accent); background: var(--accent-soft);
+    padding: 0.7rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0;
+  }
+  .warn { border-color: var(--warn); background: var(--warn-soft); }
+  .note p, .warn p { margin: 0; }
+  .tree { font-family: var(--mono); font-size: 0.85rem; }
+  .tree .c { color: var(--muted); }
+  figure { margin: 1.25rem 0; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; }
+  svg .box { fill: var(--surface); stroke: var(--border); stroke-width: 1.5; }
+  svg .box.hl { stroke: var(--accent); }
+  svg .lbl { fill: var(--text); font: 600 13px var(--sans); }
+  svg .sub { fill: var(--muted); font: 11.5px var(--mono); }
+  svg .edge { stroke: var(--muted); stroke-width: 1.4; fill: none; }
+  svg .elbl { fill: var(--muted); font: 11px var(--sans); }
+  svg .arrow { fill: var(--muted); }
+  .issues li { margin-bottom: 0.6rem; }
+  .issues strong { display: block; }
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+    main { padding: 1.5rem 1.25rem 4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc" aria-label="Contents">
+  <div class="brand">Users App<span>Developer guide</span></div>
+  <ol>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#quickstart">Running it</a></li>
+    <li><a href="#layout">Project layout</a></li>
+    <li><a href="#architecture">Request flow</a></li>
+    <li><a href="#auth">Authentication</a></li>
+    <li><a href="#data">Data storage</a></li>
+    <li><a href="#validation">Validation rules</a></li>
+    <li><a href="#rest">REST API</a></li>
+    <li><a href="#graphql">GraphQL API</a></li>
+    <li><a href="#rest-vs-gql">REST vs GraphQL</a></li>
+    <li><a href="#frontend">Web UI</a></li>
+    <li><a href="#deploy">Docker &amp; CI</a></li>
+    <li><a href="#extending">Making changes</a></li>
+    <li><a href="#issues">Known issues</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="hero">
+  <h1>Users App — Developer Guide</h1>
+  <p>How the demo users service is built, what each API does, and what to watch for when you change it.</p>
+  <div class="facts">
+    <span>Node.js 24</span><span>Express 4</span><span>Apollo Server 3</span>
+    <span>Port 9899</span><span>JSON file storage</span><span>No build step</span>
+  </div>
+</header>
+
+<!-- ============================================================ -->
+<section id="overview">
+<h2>Overview</h2>
+<p>The Users App is a small user-management service. Its purpose is to be a stable target for automated tests in other repositories, so it exposes the same data through three surfaces:</p>
+<ul>
+  <li><strong>REST API</strong> under <code>/api</code>, documented live with Swagger UI at <code>/api-docs/</code>.</li>
+  <li><strong>GraphQL API</strong> at <code>/graphql</code>, with the Apollo explorer on the same URL.</li>
+  <li><strong>Web UI</strong>: a login page (<code>/</code>) and a users table (<code>/usersPage.html</code>) built with plain HTML, Bootstrap and vanilla JavaScript.</li>
+</ul>
+<p>There is no database. Users live in a JSON file that is read and rewritten on every request, and can be reset to a known seed at any time. That makes test runs repeatable.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="quickstart">
+<h2>Running it</h2>
+<h3>Locally</h3>
+<pre><code>npm install
+npm start          # node index.js → http://localhost:9899</code></pre>
+<p>There is no dev or watch script. <code>nodemon</code> is a dev dependency, so <code>npx nodemon index.js</code> gives you restart-on-save. Note that a restart clears every login key (see <a href="#auth">Authentication</a>).</p>
+
+<h3>With Docker</h3>
+<pre><code>docker build -t users-app-demo .
+docker run -p 9899:9899 users-app-demo</code></pre>
+
+<h3>URLs once it is running</h3>
+<table>
+  <tr><th>URL</th><th>What it is</th></tr>
+  <tr><td><code>/</code></td><td>Landing and login page</td></tr>
+  <tr><td><code>/usersPage.html</code></td><td>Users table (needs a login key in <code>localStorage</code>)</td></tr>
+  <tr><td><code>/api-docs/</code></td><td>Swagger UI, generated from JSDoc comments in <code>routes/*.js</code></td></tr>
+  <tr><td><code>/graphql</code></td><td>GraphQL endpoint and explorer</td></tr>
+</table>
+
+<h3>Seed accounts</h3>
+<p>All seed users are in <code>data/data-backup.json</code>. The ones you will use most:</p>
+<table>
+  <tr><th>id</th><th>username</th><th>password</th><th>notes</th></tr>
+  <tr><td>0</td><td><code>admin</code></td><td><code>admin</code></td><td>Protected. Hidden from the UI table.</td></tr>
+  <tr><td>1, 2, 4–8</td><td><code>johndoe</code>, <code>janesmith</code>, …</td><td><code>$test123#</code></td><td>Editable</td></tr>
+  <tr><td>3</td><td><code>srinivasaimandi</code></td><td><code>$test123#</code></td><td>Protected. Shown as the login hint in the UI.</td></tr>
+</table>
+</section>
+
+<!-- ============================================================ -->
+<section id="layout">
+<h2>Project layout</h2>
+<pre class="tree"><code>index.js                  <span class="c"># entry point: Express app, middleware order, Apollo, listen(9899)</span>
+graphql.js                <span class="c"># GraphQL schema (typeDefs) and resolvers</span>
+swagger.js                <span class="c"># OpenAPI definition; scans routes/*.js for @swagger blocks</span>
+routes/
+  login.js                <span class="c"># POST /api/login, POST /api/logout (public router)</span>
+  users.js                <span class="c"># /api/users/* routes + Swagger JSDoc</span>
+controllers/
+  userController.js       <span class="c"># REST handlers for /api/users</span>
+middleware/
+  auth.js                 <span class="c"># API key store, isValidApiKey(), apiKeyAuth middleware</span>
+models/
+  User.js                 <span class="c"># User class; User.toPublic() strips the password</span>
+utils/
+  dataUtils.js            <span class="c"># read/write/reset data/data.json</span>
+  userValidation.js       <span class="c"># shared validation used by REST and GraphQL</span>
+data/
+  data-backup.json        <span class="c"># tracked seed data</span>
+  data.json               <span class="c"># working copy (git-ignored, created at startup)</span>
+public/                   <span class="c"># static web UI, served by express.static</span>
+  index.html, usersPage.html
+  scripts/index.js, scripts/usersPage.js
+  styles/…, styles/themes/*.css
+Dockerfile, .dockerignore
+.github/workflows/docker-publish.yml</code></pre>
+<p>REST and GraphQL do not share handlers, but they share <code>utils/dataUtils.js</code> and <code>utils/userValidation.js</code>. That is where the business rules live, so change rules there and both APIs pick them up.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="architecture">
+<h2>Request flow</h2>
+<p>The order of middleware in <code>index.js</code> matters. Requests pass through it top to bottom:</p>
+<figure>
+<svg viewBox="0 0 760 360" role="img" aria-labelledby="flow-title">
+  <title id="flow-title">Middleware order: JSON parser, static files, content-type header, Swagger, login routes, GraphQL with API-key context, protected users routes, 404 handler, error handler; both APIs read and write data.json</title>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="arrow"/>
+    </marker>
+  </defs>
+  <!-- column of middleware -->
+  <g>
+    <rect class="box" x="20" y="10" width="260" height="38" rx="6"/>
+    <text class="lbl" x="34" y="34">express.json()</text>
+    <rect class="box" x="20" y="60" width="260" height="38" rx="6"/>
+    <text class="lbl" x="34" y="84">express.static('public')</text>
+    <rect class="box" x="20" y="110" width="260" height="38" rx="6"/>
+    <text class="lbl" x="34" y="134">Content-Type: application/json</text>
+    <rect class="box" x="20" y="160" width="260" height="38" rx="6"/>
+    <text class="lbl" x="34" y="184">/api-docs/ → Swagger UI</text>
+    <rect class="box" x="20" y="210" width="260" height="38" rx="6"/>
+    <text class="lbl" x="34" y="234">/api → login.js (public)</text>
+    <rect class="box hl" x="20" y="260" width="260" height="38" rx="6"/>
+    <text class="lbl" x="34" y="284">/graphql → Apollo (key in context)</text>
+    <rect class="box hl" x="20" y="310" width="260" height="38" rx="6"/>
+    <text class="lbl" x="34" y="334">/api/users → apiKeyAuth → users.js</text>
+  </g>
+  <g>
+    <path class="edge" d="M150 48 V60" marker-end="url(#ah)"/>
+    <path class="edge" d="M150 98 V110" marker-end="url(#ah)"/>
+    <path class="edge" d="M150 148 V160" marker-end="url(#ah)"/>
+    <path class="edge" d="M150 198 V210" marker-end="url(#ah)"/>
+    <path class="edge" d="M150 248 V260" marker-end="url(#ah)"/>
+    <path class="edge" d="M150 298 V310" marker-end="url(#ah)"/>
+  </g>
+  <!-- right side: auth + data -->
+  <rect class="box" x="420" y="60" width="300" height="60" rx="6"/>
+  <text class="lbl" x="436" y="85">middleware/auth.js</text>
+  <text class="sub" x="436" y="105">isValidApiKey(x-api-key)</text>
+  <path class="edge" d="M280 279 C350 279 350 100 418 95" marker-end="url(#ah)"/>
+  <path class="edge" d="M280 329 C370 329 370 110 418 108" marker-end="url(#ah)"/>
+  <text class="elbl" x="352" y="200">checks key</text>
+
+  <rect class="box" x="420" y="200" width="300" height="60" rx="6"/>
+  <text class="lbl" x="436" y="225">graphql.js / userController.js</text>
+  <text class="sub" x="436" y="245">+ utils/userValidation.js</text>
+  <path class="edge" d="M570 120 V198" marker-end="url(#ah)"/>
+  <text class="elbl" x="578" y="164">valid key</text>
+
+  <rect class="box hl" x="420" y="290" width="300" height="56" rx="6"/>
+  <text class="lbl" x="436" y="314">data/data.json</text>
+  <text class="sub" x="436" y="333">read + rewritten each request</text>
+  <path class="edge" d="M570 260 V288" marker-end="url(#ah)"/>
+
+  <text class="elbl" x="420" y="30">Unmatched → JSON 404</text>
+  <text class="elbl" x="420" y="46">Thrown errors → JSON { message }</text>
+</svg>
+<figcaption>Middleware order in <code>index.js</code>. Highlighted boxes need an API key.</figcaption>
+</figure>
+<p>A few details that follow from this order:</p>
+<ul>
+  <li><strong>Static files win.</strong> <code>express.static</code> runs before everything else and serves <code>/</code> from <code>public/index.html</code>. A route for a path that matches a file in <code>public/</code> will never be reached.</li>
+  <li><strong>Every response after the static step is labelled JSON</strong>, except paths starting with <code>/api-docs</code>.</li>
+  <li><strong>The protected routes, the 404 handler and the error handler are registered inside <code>startApolloServer()</code></strong>, after <code>await server.start()</code>. They must stay after <code>applyMiddleware</code>, or the 404 handler would swallow <code>/graphql</code>.</li>
+  <li>The error handler turns malformed JSON bodies (and anything else thrown) into <code>{"message": …}</code>. It only exposes the message if the error is marked <code>expose</code> (e.g. body-parser's 400s); otherwise it returns a generic 500.</li>
+</ul>
+</section>
+
+<!-- ============================================================ -->
+<section id="auth">
+<h2>Authentication</h2>
+<p>Everything except <code>POST /api/login</code>, Swagger and the static UI needs an <code>x-api-key</code> header. <code>middleware/auth.js</code> accepts two kinds of key:</p>
+<table>
+  <tr><th>Key</th><th>Where it comes from</th><th>Lifetime</th></tr>
+  <tr><td>Fixed automation key</td><td>Hard-coded as <code>VALID_API_KEY</code> in <code>middleware/auth.js</code></td><td>Never expires; cannot be revoked</td></tr>
+  <tr><td>Login key</td><td><code>crypto.randomUUID()</code> returned by <code>POST /api/login</code></td><td>24 hours (<code>API_KEY_TTL_MS</code>), or until logout or a server restart</td></tr>
+</table>
+<p>Login keys are kept in an in-memory <code>Map</code> of key → expiry time. Expired keys are removed lazily: when someone checks that key, and in bulk whenever a new key is added.</p>
+
+<pre><code># 1. log in
+curl -s -X POST localhost:9899/api/login \
+  -H 'Content-Type: application/json' \
+  -d '{"username":"johndoe","password":"$test123#"}'
+# → {"apiKey":"1f0c…"}
+
+# 2. use the key
+curl -s localhost:9899/api/users -H 'x-api-key: 1f0c…'
+
+# 3. revoke it
+curl -s -X POST localhost:9899/api/logout -H 'x-api-key: 1f0c…'   # → 204</code></pre>
+
+<p>For GraphQL, Apollo's <code>context</code> function calls the same <code>isValidApiKey()</code> and throws <code>AuthenticationError</code> if the key is wrong. In the explorer, add the key under <em>Headers</em>.</p>
+<div class="note"><p>Login compares the username and password as typed against the stored values. Passwords are stored in plain text in the JSON file, and the API never returns them (<code>User.toPublic()</code> for REST; the GraphQL <code>User</code> type has no <code>password</code> field).</p></div>
+</section>
+
+<!-- ============================================================ -->
+<section id="data">
+<h2>Data storage</h2>
+<p><code>utils/dataUtils.js</code> handles all file access:</p>
+<table>
+  <tr><th>Function</th><th>What it does</th></tr>
+  <tr><td><code>ensureDataFile()</code></td><td>Copies <code>data-backup.json</code> to <code>data.json</code> if <code>data.json</code> is missing. Called at startup and by every <code>getData()</code>.</td></tr>
+  <tr><td><code>getData()</code></td><td>Reads and parses <code>data.json</code> synchronously. Returns <code>{ users: [...] }</code>.</td></tr>
+  <tr><td><code>saveData(data)</code></td><td>Writes the whole object back, pretty-printed.</td></tr>
+  <tr><td><code>resetData()</code></td><td>Overwrites <code>data.json</code> with the backup.</td></tr>
+</table>
+<ul>
+  <li><code>data/data.json</code> is git-ignored and docker-ignored. Changes made through the app never show up in your working tree, and every Docker container starts from the seed.</li>
+  <li>To change the seed users, edit <code>data/data-backup.json</code>, then reset (<code>PUT /api/users/reset-data</code>, the <code>resetData</code> mutation, or the <em>Reset data</em> button) or delete <code>data.json</code>.</li>
+  <li>New ids are <code>max(existing id) + 1</code> (<code>nextUserId()</code>). Deleting the user with the highest id means the next new user reuses that id.</li>
+  <li>All file I/O is synchronous, so a single request's read-modify-write cannot be interleaved with another's within one process. Running more than one process against the same file is not safe.</li>
+</ul>
+</section>
+
+<!-- ============================================================ -->
+<section id="validation">
+<h2>Validation rules</h2>
+<p>All rules are in <code>utils/userValidation.js</code> and used by both APIs.</p>
+<table>
+  <tr><th>Rule</th><th>Detail</th></tr>
+  <tr><td>Known fields only</td><td><code>pickUserUpdates()</code> keeps only <code>name</code>, <code>email</code>, <code>username</code>, <code>password</code>. Anything else in the body (including <code>id</code>) is dropped. Strings are trimmed.</td></tr>
+  <tr><td>Required on create</td><td>All four fields must be non-blank strings → <code>"All fields are required for each user"</code></td></tr>
+  <tr><td>Partial update</td><td>Only fields that are present are checked; a present field cannot be blank → <code>"&lt;field&gt; cannot be empty"</code></td></tr>
+  <tr><td>Email format</td><td><code>/^[^\s@]+@[^\s@]+\.[^\s@]+$/</code>, the same check as the UI's Add User form</td></tr>
+  <tr><td>Unique email</td><td>Case-insensitive. On update, the user's own email doesn't count.</td></tr>
+  <tr><td>Unique username</td><td>Case-sensitive (<code>Bob</code> and <code>bob</code> can both exist)</td></tr>
+  <tr><td>Protected users</td><td><code>PROTECTED_USER_IDS = [0, 3]</code> cannot be updated or deleted</td></tr>
+  <tr><td>User id in URL</td><td><code>parseUserId()</code> accepts digits only; <code>"4abc"</code> or <code>"-1"</code> become <code>null</code> and return 404</td></tr>
+</table>
+</section>
+
+<!-- ============================================================ -->
+<section id="rest">
+<h2>REST API</h2>
+<p>Base path <code>/api</code>. Request and response bodies are JSON. Errors look like <code>{"message": "…"}</code>; 500s also include <code>error</code>.</p>
+<table>
+  <tr><th>Method</th><th>Path</th><th>Success</th><th>Other responses</th></tr>
+  <tr><td><span class="verb">POST</span></td><td><code>/login</code></td><td>200 <code>{apiKey}</code></td><td>401 bad credentials</td></tr>
+  <tr><td><span class="verb">POST</span></td><td><code>/logout</code></td><td>204</td><td>Always 204, even for an unknown key</td></tr>
+  <tr><td><span class="verb">GET</span></td><td><code>/users</code></td><td>200 array</td><td>204 if there are no users</td></tr>
+  <tr><td><span class="verb">POST</span></td><td><code>/users</code></td><td>201 user</td><td>400 validation</td></tr>
+  <tr><td><span class="verb">POST</span></td><td><code>/users/bulk</code></td><td>201 array</td><td>400 if the body is not an array or any user fails; <strong>nothing is saved</strong></td></tr>
+  <tr><td><span class="verb">GET</span></td><td><code>/users/search?name=&amp;email=</code></td><td>200 array</td><td>204 no match; 400 if a parameter is repeated</td></tr>
+  <tr><td><span class="verb">GET</span></td><td><code>/users/count</code></td><td>200 <code>{count}</code></td><td></td></tr>
+  <tr><td><span class="verb">PUT</span></td><td><code>/users/reset-data</code></td><td>200 <code>{message}</code></td><td>500 if the copy fails</td></tr>
+  <tr><td><span class="verb">GET</span></td><td><code>/users/:id</code></td><td>200 user</td><td>404</td></tr>
+  <tr><td><span class="verb">PUT</span></td><td><code>/users/:id</code></td><td>200 user</td><td>400 validation, 403 protected, 404</td></tr>
+  <tr><td><span class="verb">DELETE</span></td><td><code>/users/:id</code></td><td>204</td><td>403 protected, 404</td></tr>
+</table>
+<p>All <code>/users</code> routes return 401 <code>{"message":"Unauthorized: Invalid API Key"}</code> without a valid key.</p>
+<ul>
+  <li><strong>Route order:</strong> in <code>routes/users.js</code>, <code>/search</code>, <code>/count</code>, <code>/reset-data</code> and <code>/bulk</code> are declared before <code>/:id</code>. Keep new fixed paths above <code>/:id</code>, or they will be treated as ids.</li>
+  <li><strong>Search</strong> is a case-insensitive substring match. When both <code>name</code> and <code>email</code> are given, a user must match both.</li>
+  <li><strong>PUT is a partial update.</strong> Send only the fields you want to change. The password can be changed this way.</li>
+  <li><strong>204 bodies:</strong> handlers call <code>res.status(204).json([])</code>, but HTTP drops the body of a 204, so clients receive nothing.</li>
+</ul>
+<p>The Swagger spec is built at startup by <code>swagger-jsdoc</code> from the <code>@swagger</code> comments above each route. If you change a route's behaviour, update its comment in the same file.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="graphql">
+<h2>GraphQL API</h2>
+<pre><code>type User { id: Int!  name: String!  email: String!  username: String! }
+
+type Query {
+  users: [User!]!
+  user(id: Int!): User
+  searchUsers(name: String, email: String): [User!]!
+  userCount: Int!
+}
+
+type Mutation {
+  createUser(name: String!, email: String!, username: String!, password: String!): User!
+  bulkAddUsers(users: [NewUserInput!]!): [User!]!
+  updateUser(id: Int!, name: String, email: String, username: String, password: String): User
+  deleteUser(id: Int!): Boolean!
+  resetData: Boolean!
+}</code></pre>
+<p>Example:</p>
+<pre><code>curl -s localhost:9899/graphql \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: &lt;key&gt;' \
+  -d '{"query":"mutation { createUser(name:\"Ann\", email:\"ann@x.io\", username:\"ann\", password:\"pw\") { id } }"}'</code></pre>
+<p>Errors use Apollo's error classes: <code>UserInputError</code> for validation (code <code>BAD_USER_INPUT</code>), <code>ForbiddenError</code> for editing a protected user, <code>AuthenticationError</code> for a bad key. Introspection is on.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="rest-vs-gql">
+<h2>REST vs GraphQL behaviour</h2>
+<p>The two APIs share rules but not handlers. These differences are deliberate or at least long-standing, and tests in other repos may depend on them:</p>
+<table>
+  <tr><th>Case</th><th>REST</th><th>GraphQL</th></tr>
+  <tr><td>Bulk add with an invalid or duplicate user</td><td>400; nothing saved</td><td>Invalid users are skipped; the rest are saved and returned</td></tr>
+  <tr><td>Delete a protected user</td><td>403</td><td><code>false</code></td></tr>
+  <tr><td>Delete a missing user</td><td>404</td><td><code>false</code></td></tr>
+  <tr><td>Update a missing user</td><td>404</td><td><code>null</code></td></tr>
+  <tr><td>Update a protected user</td><td>403</td><td><code>ForbiddenError</code></td></tr>
+  <tr><td>Search or list with no results</td><td>204, empty body</td><td><code>[]</code></td></tr>
+  <tr><td>Reset fails</td><td>500</td><td><code>false</code></td></tr>
+</table>
+</section>
+
+<!-- ============================================================ -->
+<section id="frontend">
+<h2>Web UI</h2>
+<p>The UI is static files in <code>public/</code>, with no bundler. Bootstrap 5.3 and Font Awesome 6.5 load from CDNs.</p>
+<h3>Login page — <code>index.html</code> + <code>scripts/index.js</code></h3>
+<ul>
+  <li>Posts to <code>/api/login</code>, stores the key in <code>localStorage["x-api-token"]</code>, then redirects to <code>usersPage.html</code>.</li>
+  <li>Clicking the word <em>Users</em> in the heading cycles through the <code>cool</code>, <code>warm</code> and <code>fresh</code> themes. The choice is saved as <code>localStorage["users-app-theme"]</code> and read by the users page too. Themes are CSS custom properties scoped to <code>body[data-theme="…"]</code>.</li>
+</ul>
+<h3>Users page — <code>usersPage.html</code> + <code>scripts/usersPage.js</code></h3>
+<ul>
+  <li>Loads <code>GET /api/users</code> on page load. Any 401 clears the stored key and returns to the login page (for example, after a server restart).</li>
+  <li>The admin user (id 0) is never shown. Protected users get a lock icon instead of edit and delete buttons. <code>PROTECTED_USER_IDS</code> is duplicated here and must match <code>utils/userValidation.js</code>.</li>
+  <li><strong>Search</strong> filters on the client, across id, name, email and username, and also matches with spaces removed. It is disabled while a row is being edited, because re-rendering would throw away the edit.</li>
+  <li><strong>Edit</strong> is inline (name, email, username). Save sends a <code>PUT</code>; Cancel or <kbd>Esc</kbd> restores the row from the cached <code>allUsers</code>.</li>
+  <li><strong>Add</strong> and <strong>Delete</strong> use modal dialogs. Delete asks for confirmation before calling the API.</li>
+  <li><strong>Refresh</strong> re-fetches; <strong>Reset data</strong> calls <code>PUT /api/users/reset-data</code>; <strong>Logout</strong> calls <code>/api/logout</code> and clears the stored key.</li>
+  <li>User data is always inserted with <code>textContent</code>, never <code>innerHTML</code> (see <code>textCell()</code>). Keep it that way to avoid XSS from stored names.</li>
+</ul>
+<p>Automation scripts target the element ids (<code>username-id</code>, <code>password-id</code>, <code>search-input</code>, <code>add-btn</code>, <code>refresh-btn</code>, <code>reset-btn</code>, <code>logout-link</code>, <code>users-table</code>, <code>add-user-*</code>, <code>delete-user-*</code>, …). Treat them as a public interface and don't rename them casually.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="deploy">
+<h2>Docker &amp; CI</h2>
+<ul>
+  <li><strong>Dockerfile:</strong> <code>node:24</code>, <code>npm ci --omit=dev</code> (so <code>nodemon</code> is not installed), copies the source, exposes 9899, runs <code>node index.js</code>. <code>data/data.json</code> is excluded, so each container starts from the seed.</li>
+  <li><strong>GitHub Actions</strong> (<code>.github/workflows/docker-publish.yml</code>): on every push to <code>main</code>, builds a multi-arch image (<code>linux/amd64</code>, <code>linux/arm64</code>) and pushes <code>&lt;DOCKER_USERNAME&gt;/users-app-demo:latest</code>. It needs the <code>DOCKER_USERNAME</code> and <code>DOCKER_TOKEN</code> repository secrets. There is no test step.</li>
+  <li><strong>Known hosts</strong> listed as Swagger servers in <code>swagger.js</code>: localhost, <code>raspberrypi.local:9899</code>, and a Render deployment. The first server entry is the relative <code>/api</code>, so “Try it out” always calls the server you're viewing.</li>
+  <li>The port is hard-coded (<code>PORT = 9899</code> in <code>index.js</code>); it does not read <code>process.env.PORT</code>.</li>
+</ul>
+</section>
+
+<!-- ============================================================ -->
+<section id="extending">
+<h2>Making changes</h2>
+<h3>Adding a user field</h3>
+<ol>
+  <li>Add it to <code>USER_FIELDS</code> in <code>utils/userValidation.js</code>. Every field in that list is required on create.</li>
+  <li>Add it to the <code>User</code> constructor in <code>models/User.js</code> and to the object built in <code>createUser</code> / <code>bulkAddUsers</code> in <code>controllers/userController.js</code>.</li>
+  <li>Add it to the GraphQL <code>User</code> type, <code>NewUserInput</code>, and the <code>createUser</code> / <code>updateUser</code> arguments in <code>graphql.js</code>.</li>
+  <li>Add it to the seed users in <code>data/data-backup.json</code>. Existing users aren't re-validated, so without this they simply won't have the field.</li>
+  <li>Update the <code>@swagger</code> comments in <code>routes/users.js</code> and, if needed, the table, the Add User form and the inline edit in <code>public/</code>.</li>
+</ol>
+<h3>Adding a REST endpoint</h3>
+<ol>
+  <li>Write the handler in <code>controllers/userController.js</code>. Wrap the response in <code>User.toPublic()</code> so passwords never leak.</li>
+  <li>Register it in <code>routes/users.js</code> above <code>/:id</code> if it's a fixed path, with a <code>@swagger</code> block.</li>
+  <li>If GraphQL should have it too, add it to <code>graphql.js</code>; there is no shared service layer.</li>
+</ol>
+<h3>Changing protected users</h3>
+<p>Update <code>PROTECTED_USER_IDS</code> in both <code>utils/userValidation.js</code> and <code>public/scripts/usersPage.js</code>, plus the 403 descriptions in <code>routes/users.js</code> and the README.</p>
+<h3>Testing</h3>
+<p>There is no automated test suite (<code>npm test</code> just exits with an error). Check changes by hand through Swagger, the GraphQL explorer and the UI, and reset the data afterwards.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="issues">
+<h2>Known issues</h2>
+<p>Found while reading the code for this guide. None of them have been fixed.</p>
+<ul class="issues">
+  <li><strong>Three theme stylesheets are unused.</strong>
+    <code>bold.css</code>, <code>dark.css</code> and <code>pastel.css</code> are in <code>public/styles/themes/</code> but no page links them and the theme cycle only includes <code>cool</code>, <code>warm</code> and <code>fresh</code>.</li>
+  <li><strong>The fixed API key is in source control.</strong>
+    Anyone who can read the repository can call every endpoint with it. That is intended for automation, but the key should not be reused anywhere it matters.</li>
+  <li><strong>Passwords are stored in plain text</strong> in <code>data.json</code>. Fine for a demo; don't put real credentials in it.</li>
+  <li><strong>Login keys don't survive a restart</strong>, and running more than one instance means a key issued by one instance is rejected by the others.</li>
+</ul>
+</section>
+</main>
+</div>
+</body>
+</html>

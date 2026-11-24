@@ -2,18 +2,16 @@
 // UI link click handler
 document.getElementById("ui-link").addEventListener("click", function (e) {
   e.preventDefault();
-  document.getElementById("login-container").classList.add("active");
-
   document.getElementById("title-msg").style.display = "none";
-  document.getElementById("links").style.display = "none";
-  document.getElementById("login-credentials").style.display = "inline";
+  // #links has Bootstrap's d-flex (display: flex !important), so a plain inline style can't hide it
+  document.getElementById("links").style.setProperty("display", "none", "important");
+  document.getElementById("login-credentials").style.display = "block";
 });
 
 document.getElementById("back-arrow").addEventListener("click", function (e) {
   e.preventDefault();
-  document.getElementById("login-container").classList.remove("active");
-  document.getElementById("title-msg").style.display = "inline";
-  document.getElementById("links").style.display = "flex";
+  document.getElementById("title-msg").style.display = "";
+  document.getElementById("links").style.removeProperty("display");
   document.getElementById("login-credentials").style.display = "none";
 });
 
