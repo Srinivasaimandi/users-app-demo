@@ -89,7 +89,7 @@ const resolvers = {
     createUser: (_, { name, email, username, password }) => {
       const data = getData();
       const newUser = {
-        id: nextUserId(data.users),
+        id: nextUserId(data),
         ...pickUserUpdates({ name, email, username, password }),
       };
       const error = validateNewUser(data.users, newUser);
@@ -104,7 +104,7 @@ const resolvers = {
       const data = getData();
       const addedUsers = [];
       newUsers.forEach((userData) => {
-        const newUser = { id: nextUserId(data.users), ...pickUserUpdates(userData) };
+        const newUser = { id: nextUserId(data), ...pickUserUpdates(userData) };
         // Invalid users and duplicates are skipped; the rest are added.
         if (validateNewUser(data.users, newUser)) {
           return;

@@ -2,6 +2,8 @@
  * @author: srinivasaimandi
  */
 
+const { maxUserId } = require("./dataUtils");
+
 const USER_FIELDS = ["name", "email", "username", "password"];
 
 // Users that cannot be edited or deleted: admin (0) and srinivasaimandi (3).
@@ -89,8 +91,10 @@ function parseUserId(value) {
   return /^\d+$/.test(String(value)) ? Number(value) : null;
 }
 
-function nextUserId(users) {
-  return users.reduce((max, user) => (user.id > max ? user.id : max), 0) + 1;
+// Takes the whole data object, not just the users, so ids freed by deletes
+// are not reused. Users pushed earlier in the same batch are counted too.
+function nextUserId(data) {
+  return Math.max(data.lastUserId || 0, maxUserId(data.users)) + 1;
 }
 
 module.exports = {

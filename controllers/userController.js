@@ -100,7 +100,7 @@ exports.createUser = (req, res) => {
   const data = getData();
   const newUserData = pickUserUpdates(req.body);
   const newUser = new User({
-    id: nextUserId(data.users),
+    id: nextUserId(data),
     name: newUserData.name,
     email: newUserData.email,
     username: newUserData.username,
@@ -127,7 +127,7 @@ exports.bulkAddUsers = (req, res) => {
   for (const userData of newUsersData) {
     const fields = pickUserUpdates(userData);
     const user = new User({
-      id: nextUserId(data.users),
+      id: nextUserId(data),
       name: fields.name,
       email: fields.email,
       username: fields.username,
