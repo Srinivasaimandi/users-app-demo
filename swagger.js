@@ -10,9 +10,17 @@ const options = {
     info: {
       title: "Users App API",
       version: "1.0.0",
-      description: "API documentation for the Users App API",
+      description:
+        "API documentation for the Users App API. Get an API key from POST /login and click Authorize. " +
+        "The same x-api-key header is required for GraphQL at /graphql. Login keys expire after 24 hours. " +
+        "Passwords are never returned in responses.",
     },
     servers: [
+      {
+        // Relative: "Try it out" calls whichever server is showing these docs
+        url: "/api",
+        description: "This server",
+      },
       {
         url: "http://localhost:9899/api",
       },
