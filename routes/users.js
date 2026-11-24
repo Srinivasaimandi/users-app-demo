@@ -46,9 +46,9 @@ router.get('/', userController.getAllUsers);
  *                 type: string
  *     responses:
  *       201:
- *         description: User created
+ *         description: User created (the password is not included in the response)
  *       400:
- *         description: Invalid input or duplicate user
+ *         description: Missing field, invalid email, or duplicate email/username (emails compare case-insensitively)
  */
 router.post('/', userController.createUser);
 
@@ -72,6 +72,10 @@ router.post('/', userController.createUser);
  *     responses:
  *       200:
  *         description: List of matching users
+ *       204:
+ *         description: No users match
+ *       400:
+ *         description: A query parameter was given more than once
  */
 router.get('/search', userController.searchUsers);
 
@@ -93,7 +97,7 @@ router.get('/count', userController.getUserCount);
  *   put:
  *     summary: Reset user data from backup
  *     tags: [Users]
- *     description: Overwrites data.json with data-backup.json and clears cache.
+ *     description: Overwrites data.json with data-backup.json.
  *     responses:
  *       200:
  *         description: Data has been reset from backup and cache cleared.
@@ -148,9 +152,9 @@ router.put('/reset-data', userController.resetData);
  *                   type: string
  *     responses:
  *       201:
- *         description: Users created
+ *         description: Users created (passwords are not included in the response)
  *       400:
- *         description: Invalid input or duplicate user
+ *         description: Body is not an array, or a user is invalid or a duplicate. Nothing is saved if any user fails.
  */
 router.post('/bulk', userController.bulkAddUsers);
 
@@ -205,9 +209,11 @@ router.get('/:id', userController.getUserById);
  *                 type: string
  *     responses:
  *       200:
- *         description: User updated
+ *         description: User updated (the password is not included in the response)
  *       400:
- *         description: Invalid input
+ *         description: Empty field, invalid email, or email/username already used by another user
+ *       403:
+ *         description: User is protected from editing (admin, id 0, and srinivasaimandi, id 3)
  *       404:
  *         description: User not found
  */
@@ -229,6 +235,8 @@ router.put('/:id', userController.updateUser);
  *     responses:
  *       204:
  *         description: User deleted
+ *       403:
+ *         description: User is protected from deleting (admin, id 0, and srinivasaimandi, id 3)
  *       404:
  *         description: User not found
  */

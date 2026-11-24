@@ -192,6 +192,14 @@ body {
   transform: scale(1.1);
 }
 
+.protected-user {
+  display: inline-block;
+  padding: 4px 6px;
+  font-size: 0.85em;
+  color: #95a5a6;
+  cursor: default;
+}
+
 .save-btn {
   background: linear-gradient(135deg, var(--accent, #2563eb), var(--accent-strong, #1d4ed8));
   border: none;
@@ -207,6 +215,26 @@ body {
 .save-btn:hover {
   box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
   transform: translateY(-1px);
+}
+
+.cancel-btn {
+  background: none;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  cursor: pointer;
+  font-size: 0.85em;
+  padding: 5px 12px;
+  margin-left: 6px;
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background: rgba(100, 116, 139, 0.1);
+}
+
+.users-search:disabled {
+  cursor: not-allowed;
 }
 
 .inline-input {

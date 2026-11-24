@@ -4,8 +4,8 @@
 
 const express = require("express");
 const crypto = require("crypto");
-const data = require("../data/data.json");
-const { addApiKey } = require("../middleware/auth");
+const { getData } = require("../utils/dataUtils");
+const { addApiKey, revokeApiKey } = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -15,6 +15,7 @@ const router = express.Router();
  *   post:
  *     summary: User login
  *     tags: [Auth]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -31,7 +32,7 @@ const router = express.Router();
  *                 type: string
  *     responses:
  *       200:
- *         description: Login successful, returns API key
+ *         description: Login successful, returns an API key valid for 24 hours
  *         content:
  *           application/json:
  *             schema:
@@ -51,7 +52,7 @@ const router = express.Router();
  */
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
-  const user = data.users.find(
+  const user = getData().users.find(
     (u) => u.username === username && u.password === password
   );
   if (user) {
@@ -61,6 +62,22 @@ router.post("/login", (req, res) => {
   } else {
     res.status(401).json({ message: "Invalid credentials" });
   }
+});
+
+/**
+ * @swagger
+ * /logout:
+ *   post:
+ *     summary: User logout
+ *     description: Revokes the API key sent in the x-api-key header, so it can no longer be used. The fixed automation key cannot be revoked.
+ *     tags: [Auth]
+ *     responses:
+ *       204:
+ *         description: Logged out (also returned if the key was already invalid or expired)
+ */
+router.post("/logout", (req, res) => {
+  revokeApiKey(req.header("x-api-key"));
+  res.status(204).send();
 });
 
 module.exports = router;

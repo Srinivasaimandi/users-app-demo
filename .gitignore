@@ -1,0 +1,4 @@
+node_modules
+
+# Working copy of the users, created from data/data-backup.json at startup
+data/data.json
