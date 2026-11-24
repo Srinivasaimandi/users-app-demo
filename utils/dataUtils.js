@@ -16,14 +16,26 @@ function ensureDataFile() {
   }
 }
 
+function maxUserId(users) {
+  return users.reduce((max, user) => (user.id > max ? user.id : max), 0);
+}
+
+// lastUserId is the highest id ever handed out. It only goes up, so a
+// deleted user's id is never given to someone new. Files written before
+// this field existed get it filled in from the users present.
 function getData() {
   ensureDataFile();
   const fileContent = fs.readFileSync(dataPath, "utf-8");
-  return JSON.parse(fileContent);
+  const data = JSON.parse(fileContent);
+  if (!Number.isInteger(data.lastUserId)) {
+    data.lastUserId = maxUserId(data.users || []);
+  }
+  return data;
 }
 
 function saveData(data) {
+  data.lastUserId = Math.max(data.lastUserId || 0, maxUserId(data.users || []));
   fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), "utf-8");
 }
 
-module.exports = { getData, saveData, resetData, ensureDataFile };
+module.exports = { getData, saveData, resetData, ensureDataFile, maxUserId };

@@ -337,14 +337,14 @@ curl -s -X POST localhost:9899/api/logout -H 'x-api-key: 1f0c…'   # → 204</c
 <table>
   <tr><th>Function</th><th>What it does</th></tr>
   <tr><td><code>ensureDataFile()</code></td><td>Copies <code>data-backup.json</code> to <code>data.json</code> if <code>data.json</code> is missing. Called at startup and by every <code>getData()</code>.</td></tr>
-  <tr><td><code>getData()</code></td><td>Reads and parses <code>data.json</code> synchronously. Returns <code>{ users: [...] }</code>.</td></tr>
-  <tr><td><code>saveData(data)</code></td><td>Writes the whole object back, pretty-printed.</td></tr>
+  <tr><td><code>getData()</code></td><td>Reads and parses <code>data.json</code> synchronously. Returns <code>{ lastUserId, users: [...] }</code>, filling in <code>lastUserId</code> from the highest existing id if the file has none.</td></tr>
+  <tr><td><code>saveData(data)</code></td><td>Raises <code>lastUserId</code> to the highest id being saved, then writes the whole object back, pretty-printed.</td></tr>
   <tr><td><code>resetData()</code></td><td>Overwrites <code>data.json</code> with the backup.</td></tr>
 </table>
 <ul>
   <li><code>data/data.json</code> is git-ignored and docker-ignored. Changes made through the app never show up in your working tree, and every Docker container starts from the seed.</li>
   <li>To change the seed users, edit <code>data/data-backup.json</code>, then reset (<code>PUT /api/users/reset-data</code>, the <code>resetData</code> mutation, or the <em>Reset data</em> button) or delete <code>data.json</code>.</li>
-  <li>New ids are <code>max(existing id) + 1</code> (<code>nextUserId()</code>). Deleting the user with the highest id means the next new user reuses that id.</li>
+  <li>New ids come from <code>nextUserId(data)</code>: <code>lastUserId + 1</code>. <code>lastUserId</code> only goes up, so a deleted user's id is never reused, and the ids in the table can have gaps. Keep <code>lastUserId</code> in <code>data-backup.json</code> at least as high as the highest seed id.</li>
   <li>All file I/O is synchronous, so a single request's read-modify-write cannot be interleaved with another's within one process. Running more than one process against the same file is not safe.</li>
 </ul>
 </section>
