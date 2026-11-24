@@ -32,10 +32,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
 // Serve Swagger UI at /api-docs/
 app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
