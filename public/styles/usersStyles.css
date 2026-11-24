@@ -252,3 +252,18 @@ body {
   border-color: var(--accent, #2563eb);
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }
+
+/* Row numbers: always 1, 2, 3... in display order, independent of user IDs */
+#users-table tbody {
+  counter-reset: row-num;
+}
+#users-table tbody tr {
+  counter-increment: row-num;
+}
+#users-table tbody td.row-num::before {
+  content: counter(row-num);
+}
+#users-table .row-num {
+  width: 3rem;
+  opacity: 0.7;
+}

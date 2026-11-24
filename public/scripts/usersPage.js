@@ -86,8 +86,13 @@
 
     function buildRow(user) {
       const tr = document.createElement('tr');
+      // Row number is drawn by a CSS counter, so it stays 1, 2, 3...
+      // after deletes and searches. The real user ID is not shown; it
+      // lives on the action buttons' data-user-id for API calls.
+      const rowNumCell = document.createElement('td');
+      rowNumCell.className = "row-num";
       tr.append(
-        textCell(user.id),
+        rowNumCell,
         textCell(user.name),
         textCell(user.email),
         textCell(user.username)
@@ -141,11 +146,10 @@
       }
       const qCompact = q.replace(/\s+/g, "");
       const filtered = allUsers.filter(user => {
-        const id = String(user.id || "").toLowerCase();
         const name = String(user.name || "").toLowerCase();
         const email = String(user.email || "").toLowerCase();
         const username = String(user.username || "").toLowerCase();
-        const haystack = `${id} ${name} ${email} ${username}`;
+        const haystack = `${name} ${email} ${username}`;
         const haystackCompact = haystack.replace(/\s+/g, "");
         return (
           haystack.includes(q) ||
