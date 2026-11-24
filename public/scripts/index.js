@@ -1,16 +1,3 @@
-const hostname = window.location.hostname;
-let baseUrl;
-
-if (hostname === "localhost") {
-  baseUrl = "http://localhost:9899";
-} else if (hostname === "raspberrypi.local") {
-  baseUrl = "http://raspberrypi.local:9899";
-} else {
-  baseUrl = "https://express-api-demo-jyxx.onrender.com";
-}
-
-document.getElementById("swagger-link").href = `${baseUrl}/api-docs/`;
-document.getElementById("graphql-link").href = `${baseUrl}/graphql`;
 
 // UI link click handler
 document.getElementById("ui-link").addEventListener("click", function (e) {

@@ -80,6 +80,23 @@
             </div>
           </div>
         </div>
+        <div class="modal-overlay" id="delete-user-modal" aria-hidden="true">
+          <div class="modal-card" role="alertdialog" aria-modal="true" aria-labelledby="delete-user-title" aria-describedby="delete-user-message">
+            <div class="modal-header">
+              <h2 id="delete-user-title" class="h5 m-0">Delete User</h2>
+              <button type="button" class="modal-close" id="delete-user-close" aria-label="Close">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p id="delete-user-message" class="mb-3"></p>
+              <div class="modal-actions">
+                <button type="button" class="btn btn-danger" id="delete-user-confirm">Delete</button>
+                <button type="button" class="btn btn-outline-secondary" id="delete-user-cancel">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="table-responsive">
           <table id="users-table" class="table align-middle table-hover" style="display:none;">
       <thead>
